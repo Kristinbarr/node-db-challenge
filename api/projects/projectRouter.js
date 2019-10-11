@@ -38,7 +38,20 @@ router.post('/', (req, res) => {
 
 // POST - add a new task to a project by id
 router.post('/:id', (req, res) => {
-  Project.addTask
+  //adding param project id to req.body
+  req.body.project_id = req.params.id
+
+  Project.addTask(req.body)
+    .then(ids => {
+      const id = ids[0]
+      return Project.findTaskByTaskId(id)
+    })
+    .then((task) => {
+      res.status(200).json(task)
+    })
+    .catch((err) => {
+      res.status(500).json(err)
+    })
 })
 
 module.exports = router
