@@ -1,24 +1,28 @@
 const db = require('../../data/dbConfig')
 
 module.exports = {
-  getProjects,
-  getTasksById,
+  findProjects,
+  findTasksByProjectId,
   addProject,
-  addTaskById
+  addTask
 }
 
-function getProjects() {
+function findProjects() {
   return db('projects')
 }
 
-function getTasksById(id) {
-  return db('tasks').where({ id })
+// include project name, project desc, completed bool
+function findTasksByProjectId(id) {
+  return db('tasks as t')
+  .join('projects as p', 'p.id', 't.project_id')
+  .select('t.id', 'p.name as projectName', 'p.description', 'p.completed')
+  .where({ id })
 }
 
 function addProject(project) {
   return db('projects').insert(project)
 }
 
-function addTaskById(id, task) {
+function addTask(task) {
   return db('tasks').insert(task)
 }

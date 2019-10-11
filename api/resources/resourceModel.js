@@ -1,19 +1,19 @@
 const db = require('../../data/dbConfig')
 
 module.exports = {
-  get,
-  getById,
+  find,
+  findById,
   add
 }
 
-function get() {
+function find() {
   return db('resources')
 }
 
-function getById(id) {
+function findById(id) {
   return db('resources').where({ id })
 }
 
-function add(todo) {
-  return db('resources').insert(todo)
+function add(resource) {
+  return db('resources').insert(resource)
 }
