@@ -8,7 +8,10 @@ exports.up = function(knex) {
     .createTable('projects', (tbl) => {
       tbl.increments()
       tbl.string('name').notNullable()
-      tbl.boolean('completed').defaultTo(false)
+      tbl
+        .boolean('completed')
+        .defaultTo(false)
+        .notNullable()
       tbl.text('description')
     })
     .createTable('project_resources', (tbl) => {
@@ -32,7 +35,10 @@ exports.up = function(knex) {
     .createTable('tasks', (tbl) => {
       tbl.increments()
       tbl.string('description', 255).notNullable()
-      tbl.boolean('completed').defaultTo(false)
+      tbl
+        .boolean('completed')
+        .defaultTo(false)
+        .notNullable()
       tbl.text('notes')
       tbl
         .integer('project_id')
