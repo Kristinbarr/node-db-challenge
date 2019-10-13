@@ -27,8 +27,12 @@ router.get('/:id', (req, res) => {
 
 // POST - add a new resource
 router.post('/', (req, res) => {
-  Resource.add(res.body)
-    .then(resource => {
+  Resource.add(req.body)
+    .then((ids) => {
+      const id = ids[0]
+      return Resource.findById(id)
+    })
+    .then((resource) => {
       res.status(200).json(req.body)
     })
     .catch((err) => {
